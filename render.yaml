@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: cachelru-backend
+    runtime: go
+    rootDir: CacheLRU
+    buildCommand: go build -o app
+    startCommand: ./app
+    plan: free
+
+  - type: web
+    name: minj-wrkbnch-frontend
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    plan: free
+    envVars:
+      - key: VITE_CACHE_API_URL
+        value: https://cachelru-backend.onrender.com
