@@ -5,7 +5,7 @@ services:
     rootDir: CacheLRU
     buildCommand: go build -o app
     startCommand: ./app
-    plan: free
+
 
   - type: web
     name: minj-wrkbnch-frontend
