@@ -13,7 +13,6 @@ services:
     rootDir: frontend
     buildCommand: npm install && npm run build
     staticPublishPath: dist
-    plan: free
     envVars:
       - key: VITE_CACHE_API_URL
         value: https://cachelru-backend.onrender.com
