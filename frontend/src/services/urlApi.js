@@ -1,4 +1,4 @@
-const API_BASE = import.meta.env.VITE_SHORTENER_API_URL || "http://localhost:8081"
+export const API_BASE = import.meta.env.VITE_SHORTENER_API_URL || "http://localhost:8081"
 
 export async function shortenUrl (longUrl){
     const res = await fetch(`${API_BASE}/shorten`,{
