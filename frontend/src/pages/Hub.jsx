@@ -1,6 +1,7 @@
 import {useState, useEffect} from "react";
 import ProjectCard from "../components/ProjectCard";
 import CacheThumbnail from "../components/thumbnails/CacheThumbnail";
+import LinkThumbnail from "../components/thumbnails/LinkThumbnail";
 
 export default function Hub() {
 
@@ -22,7 +23,7 @@ export default function Hub() {
                     <button
                         className="icon-btn"
                         onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-                        artial-label="Toggle theme"
+                        aria-label="Toggle theme"
                         >
                         {theme === "light"? "☾" : "☀"}
                     </button>
@@ -39,6 +40,7 @@ export default function Hub() {
             </header>
             <main className="hub-grid">
                 <ProjectCard title="LRU Cache Server" thumbnail={<CacheThumbnail />} to="/cache" />
+                <ProjectCard title="Link Shortener" thumbnail={<LinkThumbnail />} to="/urlShorten" />
             </main>
 
             <footer className="hub-footer">
