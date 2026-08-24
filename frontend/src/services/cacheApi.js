@@ -1,4 +1,4 @@
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8080";
+export const API_BASE = import.meta.env.VITE_CACHE_API_URL || "http://localhost:8080";
 
 export async function setItem(key, value, ttlSeconds) {
   const res = await fetch(`${API_BASE}/set`, {
