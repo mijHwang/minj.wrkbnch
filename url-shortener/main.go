@@ -105,6 +105,12 @@ func handleShorten(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	req.LongURL = strings.TrimSpace(req.LongURL)
+
+	if !strings.HasPrefix(req.LongURL, "http://") && !strings.HasPrefix(req.LongURL, "https://") {
+		req.LongURL = "https://" + req.LongURL
+	}
+
 	if err := db.QueryRow(
 		"Insert Into urls (original_url) VALUES ($1) RETURNING id",
 		req.LongURL,
@@ -135,7 +141,7 @@ func handleRedirect(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	http.Redirect(w, r, longURL, http.StatusNotFound)
+	http.Redirect(w, r, longURL, http.StatusFound)
 }
 
 func enableCORS(next http.HandlerFunc) http.HandlerFunc {
