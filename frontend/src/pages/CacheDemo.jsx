@@ -11,6 +11,8 @@ export default function CacheDemo() {
   const [getResult, setGetResult] = useState(null);
   const [hits, setHits] = useState(0);
   const [misses, setMisses] = useState(0);
+  const [setLoading, setSetLoading] = useState(false);
+  const [getLoading, setGetLoading] = useState(false);
 
   async function refresh() {
     const data = await getAll();
@@ -25,18 +27,22 @@ export default function CacheDemo() {
 
   async function handleSet(e) {
     e.preventDefault();
+    setSetLoading(true);
     await setItem(setKey, setValue, Number(ttl));
     setSetKey("");
     setSetValue("");
-    refresh();
+    await refresh();
+    setSetLoading(false);
   }
 
   async function handleGet(e) {
     e.preventDefault();
+    setGetLoading(true);
     const result = await getItem(getKey);
     setGetResult(result);
     if (result.found) setHits((h) => h + 1);
     else setMisses((m) => m + 1);
+    setGetLoading(false);
   }
 
   return (
@@ -73,8 +79,10 @@ export default function CacheDemo() {
           </div>
           <p style={{ fontSize: "12px", opacity: 0.5, marginTop: "24px" }}>
             Note: this cache is shared across everyone currently viewing this demo — 
-            it's a single in-memory instance, not session-isolated. Resets on redeploy.
-            Also on the TO-DO list. A reset button.
+            it's a single in-memory instance, not session-isolated. Resets on redeploy.   
+            <strong> Server might need time to wake up on the first try!</strong>
+            <br />
+            (Also on the TO-DO list. A reset button.)
             </p>
         </div>
 
@@ -84,13 +92,17 @@ export default function CacheDemo() {
             <input value={setKey} onChange={(e) => setSetKey(e.target.value)} placeholder="key" required />
             <input value={setValue} onChange={(e) => setSetValue(e.target.value)} placeholder="value" required />
             <input type="number" value={ttl} onChange={(e) => setTtl(e.target.value)} placeholder="ttl seconds" />
-            <button type="submit">Set</button>
+            <button type="submit" disabled ={setLoading}>
+              {setLoading ? "Setting the key..." : "Set"}
+              </button>
           </form>
 
           <form className="field-group" onSubmit={handleGet}>
             <label>Get a key</label>
             <input value={getKey} onChange={(e) => setGetKey(e.target.value)} placeholder="key to get" required />
-            <button type="submit">Get</button>
+            <button type="submit" disabled = {getLoading}>
+              {getLoading ? "Getting the key..." : "Get"}
+            </button>
           </form>
 
           {getResult && (

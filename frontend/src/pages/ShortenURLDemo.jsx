@@ -36,11 +36,15 @@ export default function ShortenURLDemo(){
                             {loading ? "Shortening..." : "Shorten"}
                         </button>
                     </form>
+                    <p style={{ fontSize: "12px", opacity: 0.5 }}>
+                        <strong>Server might need time to wake up on the first try!</strong>
+                    </p>
                 </div>
 
                 <div className="panel history-panel">
                     {history.length === 0 ? (
-                        <p className="history-empty">No history of shortening. Shoten a URL to se it appear</p>
+                        <p className="history-empty">No history of shortening. Shorten a URL to see it appear</p>
+                        
                     ): (
                         <div className="history-list">
                         {history.map((record, i) => (
